@@ -20,7 +20,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private func setUpWindow() {
         window = .init(frame: UIScreen.main.bounds)
-        window?.rootViewController = SimulationViewController()
+        window?.rootViewController = SimulationViewController(
+            simulationController: .init()
+        )
         window?.makeKeyAndVisible()
     }
 }

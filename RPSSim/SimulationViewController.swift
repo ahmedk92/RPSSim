@@ -6,9 +6,16 @@
 //
 
 import UIKit
+import RPSSimCore
+import RPSSimUI
 
 class SimulationViewController: UIViewController {
-    init() {
+    private let simulationController: SimulationController
+    
+    private var simulationView: SimulationView!
+    
+    init(simulationController: SimulationController) {
+        self.simulationController = simulationController
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -18,5 +25,20 @@ class SimulationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setUpView()
+        
+        simulationView.viewModel = simulationController.viewModel
+    }
+    
+    private func setUpView() {
+        simulationView = .init()
+        simulationView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(simulationView)
+        NSLayoutConstraint.activate([
+            simulationView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            simulationView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            simulationView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            simulationView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
     }
 }
