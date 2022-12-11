@@ -50,21 +50,30 @@ public final class SimulationCharacterView: UIView {
         
         guard let viewModel = viewModel else { return }
         
+        let throttleTime: CGFloat = 0.5
+        
         viewModel.type
             .compactMap({ $0 })
-            .sink { [weak self] type in
+            .combineLatest(viewModel.frame.compactMap({ $0 }))
+            .throttle(
+                for: DispatchQueue.SchedulerTimeType.Stride(floatLiteral: throttleTime),
+                scheduler: DispatchQueue.main,
+                latest: true
+            )
+            .sink { [weak self] type, frame in
                 guard let self = self else { return }
-                self.simulationCharacterLabelConfigurator.configure(
-                    label: self.label,
-                    forType: type
+                UIView.animate(
+                    withDuration: throttleTime,
+                    animations: {
+                        self.frame = frame
+                    },
+                    completion: { _ in
+                        self.simulationCharacterLabelConfigurator.configure(
+                            label: self.label,
+                            forType: type
+                        )
+                    }
                 )
-            }.store(in: &cancellables)
-        
-        viewModel.frame
-            .compactMap({ $0 })
-            .sink { [weak self] frame in
-                guard let self = self else { return }
-                self.frame = frame
             }.store(in: &cancellables)
     }
 }
