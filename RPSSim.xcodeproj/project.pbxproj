@@ -15,6 +15,7 @@
 		28F682B42945EFAB008556B4 /* RPSSimUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28F682B32945EFAB008556B4 /* RPSSimUITestsLaunchTests.swift */; };
 		28F682C12945F029008556B4 /* SimulationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28F682C02945F029008556B4 /* SimulationViewController.swift */; };
 		28F682C82945F2A9008556B4 /* RPSSimUI in Frameworks */ = {isa = PBXBuildFile; productRef = 28F682C72945F2A9008556B4 /* RPSSimUI */; };
+		28F682CB2945F329008556B4 /* RPSSimCore in Frameworks */ = {isa = PBXBuildFile; productRef = 28F682CA2945F329008556B4 /* RPSSimCore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		28F682B32945EFAB008556B4 /* RPSSimUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPSSimUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		28F682C02945F029008556B4 /* SimulationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimulationViewController.swift; sourceTree = "<group>"; };
 		28F682C32945F143008556B4 /* RPSSimUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RPSSimUI; sourceTree = "<group>"; };
+		28F682C92945F31F008556B4 /* RPSSimCore */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RPSSimCore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +57,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				28F682C82945F2A9008556B4 /* RPSSimUI in Frameworks */,
+				28F682CB2945F329008556B4 /* RPSSimCore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -129,6 +132,7 @@
 		28F682C22945F10B008556B4 /* Packages */ = {
 			isa = PBXGroup;
 			children = (
+				28F682C92945F31F008556B4 /* RPSSimCore */,
 				28F682C32945F143008556B4 /* RPSSimUI */,
 			);
 			path = Packages;
@@ -159,6 +163,7 @@
 			name = RPSSim;
 			packageProductDependencies = (
 				28F682C72945F2A9008556B4 /* RPSSimUI */,
+				28F682CA2945F329008556B4 /* RPSSimCore */,
 			);
 			productName = RPSSim;
 			productReference = 28F6828D2945EFA9008556B4 /* RPSSim.app */;
@@ -612,6 +617,10 @@
 		28F682C72945F2A9008556B4 /* RPSSimUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = RPSSimUI;
+		};
+		28F682CA2945F329008556B4 /* RPSSimCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RPSSimCore;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
