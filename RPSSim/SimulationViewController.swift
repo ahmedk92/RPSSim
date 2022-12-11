@@ -16,7 +16,6 @@ class SimulationViewController: UIViewController {
     private let simulationCharacterLabelConfigurator: SimulationCharacterLabelConfigurator
     
     private var simulationView: SimulationView!
-    private var viewDidAppearQueue: OperationQueue = .main
     
     init(
         simulationController: SimulationController,
@@ -43,11 +42,8 @@ class SimulationViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        viewDidAppearQueue.addOperation { [weak self] in
-            guard let self = self else { return }
-            self.simulationViewFrameSizeProvider.simulationView = self.simulationView
-            self.simulationController.startSimulation()
-        }
+        simulationViewFrameSizeProvider.simulationView = simulationView
+        simulationController.startSimulation()
     }
     
     private func setUpView() {
