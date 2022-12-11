@@ -7,7 +7,7 @@
 
 import Foundation
 
-private let DENSITY_FACTOR: CGFloat = 0.05
+private let DENSITY_FACTOR: CGFloat = 0.1
 
 public final class SimulationCharacterGenerator {
     public init() {}
