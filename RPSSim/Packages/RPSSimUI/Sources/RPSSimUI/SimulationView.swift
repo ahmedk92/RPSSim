@@ -10,7 +10,7 @@ import RPSSimCore
 import Combine
 
 public final class SimulationView: UIView {
-    private let simulationCharacterViewAttributesProvider: SimulationCharacterViewAttributesProvider
+    private let simulationCharacterEmojiResolver: SimulationCharacterEmojiResolver
     
     public var viewModel: SimulationViewModel? {
         didSet {
@@ -20,8 +20,8 @@ public final class SimulationView: UIView {
     private var cancellables: Set<AnyCancellable> = []
     private var characterViews: [SimulationCharacterView] = []
     
-    public init(simulationCharacterViewAttributesProvider: SimulationCharacterViewAttributesProvider) {
-        self.simulationCharacterViewAttributesProvider = simulationCharacterViewAttributesProvider
+    public init(simulationCharacterEmojiResolver: SimulationCharacterEmojiResolver) {
+        self.simulationCharacterEmojiResolver = simulationCharacterEmojiResolver
         super.init(frame: .zero)
     }
     
@@ -46,7 +46,7 @@ public final class SimulationView: UIView {
     
     private func addCharacterView(characterViewModel: SimulationCharacterViewModel) {
         let characterView = SimulationCharacterView(
-            simulationCharacterViewAttributesProvider: simulationCharacterViewAttributesProvider
+            simulationCharacterEmojiResolver: simulationCharacterEmojiResolver
         )
         characterView.viewModel = characterViewModel
         addSubview(characterView)

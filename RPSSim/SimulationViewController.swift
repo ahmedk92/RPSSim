@@ -11,16 +11,20 @@ import RPSSimUI
 
 class SimulationViewController: UIViewController {
     private let simulationController: SimulationController
-    private let simulationCharacterViewAttributesProvider: SimulationCharacterViewAttributesProvider
+    private let simulationCharacterEmojiResolver: SimulationCharacterEmojiResolver
+    private let simulationViewFrameSizeProvider: RPSSimUI.SimulationViewFrameSizeProvider
     
     private var simulationView: SimulationView!
+    private var viewDidAppearQueue: OperationQueue = .main
     
     init(
         simulationController: SimulationController,
-        simulationCharacterViewAttributesProvider: SimulationCharacterViewAttributesProvider
+        simulationCharacterEmojiResolver: SimulationCharacterEmojiResolver,
+        simulationViewFrameSizeProvider: RPSSimUI.SimulationViewFrameSizeProvider
     ) {
         self.simulationController = simulationController
-        self.simulationCharacterViewAttributesProvider = simulationCharacterViewAttributesProvider
+        self.simulationCharacterEmojiResolver = simulationCharacterEmojiResolver
+        self.simulationViewFrameSizeProvider = simulationViewFrameSizeProvider
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -31,13 +35,20 @@ class SimulationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpView()
-        
         simulationView.viewModel = simulationController.viewModel
-        simulationController.startSimulation()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        viewDidAppearQueue.addOperation { [weak self] in
+            guard let self = self else { return }
+            self.simulationViewFrameSizeProvider.simulationView = self.simulationView
+            self.simulationController.startSimulation()
+        }
     }
     
     private func setUpView() {
-        simulationView = .init(simulationCharacterViewAttributesProvider: simulationCharacterViewAttributesProvider)
+        simulationView = .init(simulationCharacterEmojiResolver: simulationCharacterEmojiResolver)
         simulationView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(simulationView)
         NSLayoutConstraint.activate([

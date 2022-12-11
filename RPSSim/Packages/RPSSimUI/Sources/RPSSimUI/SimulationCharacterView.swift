@@ -10,7 +10,7 @@ import Combine
 import RPSSimCore
 
 public final class SimulationCharacterView: UIView {
-    private let simulationCharacterViewAttributesProvider: SimulationCharacterViewAttributesProvider
+    private let simulationCharacterEmojiResolver: SimulationCharacterEmojiResolver
     var viewModel: SimulationCharacterViewModel? {
         didSet {
             updateView()
@@ -19,8 +19,8 @@ public final class SimulationCharacterView: UIView {
     private var label: UILabel!
     private var frameCancellable: AnyCancellable?
     
-    public init(simulationCharacterViewAttributesProvider: SimulationCharacterViewAttributesProvider) {
-        self.simulationCharacterViewAttributesProvider = simulationCharacterViewAttributesProvider
+    public init(simulationCharacterEmojiResolver: SimulationCharacterEmojiResolver) {
+        self.simulationCharacterEmojiResolver = simulationCharacterEmojiResolver
         super.init(frame: .zero)
         setUpSubviews()
     }
@@ -47,7 +47,7 @@ public final class SimulationCharacterView: UIView {
     
     private func updateView() {
         label.text = viewModel.map { viewModel in
-            simulationCharacterViewAttributesProvider.emoji(characterType: viewModel.type)
+            simulationCharacterEmojiResolver.emoji(characterType: viewModel.type)
         }
         frameCancellable = viewModel?.frame
             .compactMap({ $0 })

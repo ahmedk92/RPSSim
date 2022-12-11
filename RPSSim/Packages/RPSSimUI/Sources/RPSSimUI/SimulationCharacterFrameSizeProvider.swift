@@ -8,7 +8,7 @@
 import UIKit
 import RPSSimCore
 
-public final class SimulationCharacterViewAttributesProvider: SimulationCharacterFrameSizeProvider {
+public final class SimulationCharacterFrameSizeProvider: RPSSimCore.SimulationCharacterFrameSizeProvider {
     private let simulationCharacterLabelConfigurator: SimulationCharacterLabelConfigurator
     private let simulationCharacterEmojiResolver: SimulationCharacterEmojiResolver
     
