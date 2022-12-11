@@ -8,9 +8,14 @@
 import Foundation
 
 public final class SimulationController {
+    private let simulationCharacterFrameSizeProvider: SimulationCharacterFrameSizeProvider
     public var viewModel: SimulationViewModel = .init()
     
-    public init() {
+    public init(simulationCharacterFrameSizeProvider: SimulationCharacterFrameSizeProvider) {
+        self.simulationCharacterFrameSizeProvider = simulationCharacterFrameSizeProvider
+    }
+    
+    public func startSimulation() {
         let dummyCharacter1 = SimulationCharacterViewModel(type: .rock)
         dummyCharacter1.frame.send(
             .init(
@@ -18,10 +23,7 @@ public final class SimulationController {
                     x: 100,
                     y: 100
                 ),
-                size: .init(
-                    width: 10,
-                    height: 10
-                )
+                size: simulationCharacterFrameSizeProvider.size()
             )
         )
         viewModel.characters.send([

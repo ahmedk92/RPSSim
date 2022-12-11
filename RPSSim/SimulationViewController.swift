@@ -11,11 +11,16 @@ import RPSSimUI
 
 class SimulationViewController: UIViewController {
     private let simulationController: SimulationController
+    private let simulationCharacterViewAttributesProvider: SimulationCharacterViewAttributesProvider
     
     private var simulationView: SimulationView!
     
-    init(simulationController: SimulationController) {
+    init(
+        simulationController: SimulationController,
+        simulationCharacterViewAttributesProvider: SimulationCharacterViewAttributesProvider
+    ) {
         self.simulationController = simulationController
+        self.simulationCharacterViewAttributesProvider = simulationCharacterViewAttributesProvider
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -28,10 +33,11 @@ class SimulationViewController: UIViewController {
         setUpView()
         
         simulationView.viewModel = simulationController.viewModel
+        simulationController.startSimulation()
     }
     
     private func setUpView() {
-        simulationView = .init()
+        simulationView = .init(simulationCharacterViewAttributesProvider: simulationCharacterViewAttributesProvider)
         simulationView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(simulationView)
         NSLayoutConstraint.activate([

@@ -16,6 +16,7 @@
 		28F682C12945F029008556B4 /* SimulationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28F682C02945F029008556B4 /* SimulationViewController.swift */; };
 		28F682C82945F2A9008556B4 /* RPSSimUI in Frameworks */ = {isa = PBXBuildFile; productRef = 28F682C72945F2A9008556B4 /* RPSSimUI */; };
 		28F682CB2945F329008556B4 /* RPSSimCore in Frameworks */ = {isa = PBXBuildFile; productRef = 28F682CA2945F329008556B4 /* RPSSimCore */; };
+		28F682CD29464105008556B4 /* SimulationViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28F682CC29464105008556B4 /* SimulationViewControllerFactory.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		28F682C02945F029008556B4 /* SimulationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimulationViewController.swift; sourceTree = "<group>"; };
 		28F682C32945F143008556B4 /* RPSSimUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RPSSimUI; sourceTree = "<group>"; };
 		28F682C92945F31F008556B4 /* RPSSimCore */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RPSSimCore; sourceTree = "<group>"; };
+		28F682CC29464105008556B4 /* SimulationViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimulationViewControllerFactory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +107,7 @@
 				28F6829E2945EFAB008556B4 /* Info.plist */,
 				28F682902945EFA9008556B4 /* AppDelegate.swift */,
 				28F682C02945F029008556B4 /* SimulationViewController.swift */,
+				28F682CC29464105008556B4 /* SimulationViewControllerFactory.swift */,
 				28F682992945EFAB008556B4 /* Assets.xcassets */,
 				28F6829B2945EFAB008556B4 /* LaunchScreen.storyboard */,
 				28F682C22945F10B008556B4 /* Packages */,
@@ -279,6 +282,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				28F682CD29464105008556B4 /* SimulationViewControllerFactory.swift in Sources */,
 				28F682912945EFA9008556B4 /* AppDelegate.swift in Sources */,
 				28F682C12945F029008556B4 /* SimulationViewController.swift in Sources */,
 			);

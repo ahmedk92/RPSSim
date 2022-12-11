@@ -7,6 +7,6 @@
 
 import Foundation
 
-public enum SimulationCharacterType: CaseIterable {
-    case rock, paper, scissors
+public protocol SimulationCharacterFrameSizeProvider {
+    func size() -> CGSize
 }

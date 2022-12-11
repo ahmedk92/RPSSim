@@ -10,17 +10,18 @@ import Combine
 import RPSSimCore
 
 public final class SimulationCharacterView: UIView {
+    private let simulationCharacterViewAttributesProvider: SimulationCharacterViewAttributesProvider
     var viewModel: SimulationCharacterViewModel? {
         didSet {
             updateView()
         }
     }
-    
     private var label: UILabel!
     private var frameCancellable: AnyCancellable?
     
-    public override init(frame: CGRect) {
-        super.init(frame: frame)
+    public init(simulationCharacterViewAttributesProvider: SimulationCharacterViewAttributesProvider) {
+        self.simulationCharacterViewAttributesProvider = simulationCharacterViewAttributesProvider
+        super.init(frame: .zero)
         setUpSubviews()
     }
     
@@ -45,25 +46,14 @@ public final class SimulationCharacterView: UIView {
     }
     
     private func updateView() {
-        label.text = viewModel?.type.emoji
+        label.text = viewModel.map { viewModel in
+            simulationCharacterViewAttributesProvider.emoji(characterType: viewModel.type)
+        }
         frameCancellable = viewModel?.frame
             .compactMap({ $0 })
             .sink { [weak self] frame in
             guard let self = self else { return }
                 self.frame = frame
-        }
-    }
-}
-
-private extension SimulationCharacterType {
-    var emoji: String {
-        switch self {
-        case .rock:
-            return "🪨"
-        case .paper:
-            return "📜"
-        case .scissors:
-            return "✂️"
         }
     }
 }

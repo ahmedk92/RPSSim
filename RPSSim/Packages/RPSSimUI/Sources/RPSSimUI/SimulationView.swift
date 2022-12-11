@@ -10,17 +10,19 @@ import RPSSimCore
 import Combine
 
 public final class SimulationView: UIView {
+    private let simulationCharacterViewAttributesProvider: SimulationCharacterViewAttributesProvider
+    
     public var viewModel: SimulationViewModel? {
         didSet {
             observeViewModel()
         }
     }
-    
     private var cancellables: Set<AnyCancellable> = []
     private var characterViews: [SimulationCharacterView] = []
     
-    public override init(frame: CGRect) {
-        super.init(frame: frame)
+    public init(simulationCharacterViewAttributesProvider: SimulationCharacterViewAttributesProvider) {
+        self.simulationCharacterViewAttributesProvider = simulationCharacterViewAttributesProvider
+        super.init(frame: .zero)
     }
     
     required init?(coder: NSCoder) {
@@ -43,7 +45,9 @@ public final class SimulationView: UIView {
     }
     
     private func addCharacterView(characterViewModel: SimulationCharacterViewModel) {
-        let characterView = SimulationCharacterView()
+        let characterView = SimulationCharacterView(
+            simulationCharacterViewAttributesProvider: simulationCharacterViewAttributesProvider
+        )
         characterView.viewModel = characterViewModel
         addSubview(characterView)
         characterViews.append(characterView)

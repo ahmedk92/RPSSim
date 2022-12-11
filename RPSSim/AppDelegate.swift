@@ -6,11 +6,14 @@
 //
 
 import UIKit
+import RPSSimCore
+import RPSSimUI
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    private let simulationViewControllerFactory: SimulationViewControllerFactory = .init()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -20,9 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private func setUpWindow() {
         window = .init(frame: UIScreen.main.bounds)
-        window?.rootViewController = SimulationViewController(
-            simulationController: .init()
-        )
+        window?.rootViewController = simulationViewControllerFactory.makeSimulationViewController()
         window?.makeKeyAndVisible()
     }
 }
