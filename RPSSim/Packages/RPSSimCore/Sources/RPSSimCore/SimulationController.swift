@@ -7,25 +7,30 @@
 
 import Foundation
 import CoreGraphics
+import Combine
 
 public final class SimulationController {
     private let simulationCharacterFrameSizeProvider: SimulationCharacterFrameSizeProvider
     private let simulationViewFrameSizeProvider: SimulationViewFrameSizeProvider
     private let simulationCharacterGenerator: SimulationCharacterGenerator
     private let simulationCharacterPositionAdvancer: SimulationCharacterPositionAdvancer
+    private let caDisplayLinkPublisherProvider: CADisplayLinkPublisherProvider
     
     public var viewModel: SimulationViewModel = .init()
+    private var cancellables: Set<AnyCancellable> = []
     
     public init(
         simulationCharacterFrameSizeProvider: SimulationCharacterFrameSizeProvider,
         simulationViewFrameSizeProvider: SimulationViewFrameSizeProvider,
         simulationCharacterGenerator: SimulationCharacterGenerator,
-        simulationCharacterPositionAdvancer: SimulationCharacterPositionAdvancer
+        simulationCharacterPositionAdvancer: SimulationCharacterPositionAdvancer,
+        caDisplayLinkPublisherProvider: CADisplayLinkPublisherProvider
     ) {
         self.simulationCharacterFrameSizeProvider = simulationCharacterFrameSizeProvider
         self.simulationViewFrameSizeProvider = simulationViewFrameSizeProvider
         self.simulationCharacterGenerator = simulationCharacterGenerator
         self.simulationCharacterPositionAdvancer = simulationCharacterPositionAdvancer
+        self.caDisplayLinkPublisherProvider = caDisplayLinkPublisherProvider
     }
     
     public func startSimulation() {
@@ -34,7 +39,9 @@ public final class SimulationController {
             characterFrameSize: simulationCharacterFrameSizeProvider.size()
         ))
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+        caDisplayLinkPublisherProvider.publisher.sink { [weak self] in
+            guard let self = self else { return }
+            
             self.simulationCharacterPositionAdvancer.advance(
                 characterViewModels: self.viewModel.characters.value,
                 viewFrame: .init(
@@ -42,6 +49,6 @@ public final class SimulationController {
                     size: self.simulationViewFrameSizeProvider.size()
                 )
             )
-        }
+        }.store(in: &cancellables)
     }
 }
