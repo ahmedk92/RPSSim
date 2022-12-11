@@ -14,6 +14,7 @@
 		28F682B22945EFAB008556B4 /* RPSSimUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28F682B12945EFAB008556B4 /* RPSSimUITests.swift */; };
 		28F682B42945EFAB008556B4 /* RPSSimUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28F682B32945EFAB008556B4 /* RPSSimUITestsLaunchTests.swift */; };
 		28F682C12945F029008556B4 /* SimulationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28F682C02945F029008556B4 /* SimulationViewController.swift */; };
+		28F682C82945F2A9008556B4 /* RPSSimUI in Frameworks */ = {isa = PBXBuildFile; productRef = 28F682C72945F2A9008556B4 /* RPSSimUI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +46,7 @@
 		28F682B12945EFAB008556B4 /* RPSSimUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPSSimUITests.swift; sourceTree = "<group>"; };
 		28F682B32945EFAB008556B4 /* RPSSimUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPSSimUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		28F682C02945F029008556B4 /* SimulationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimulationViewController.swift; sourceTree = "<group>"; };
+		28F682C32945F143008556B4 /* RPSSimUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RPSSimUI; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +54,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				28F682C82945F2A9008556B4 /* RPSSimUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,10 +78,11 @@
 		28F682842945EFA9008556B4 = {
 			isa = PBXGroup;
 			children = (
+				28F6828E2945EFA9008556B4 /* Products */,
 				28F6828F2945EFA9008556B4 /* RPSSim */,
 				28F682A62945EFAB008556B4 /* RPSSimTests */,
 				28F682B02945EFAB008556B4 /* RPSSimUITests */,
-				28F6828E2945EFA9008556B4 /* Products */,
+				28F682C62945F2A9008556B4 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -100,6 +104,7 @@
 				28F682C02945F029008556B4 /* SimulationViewController.swift */,
 				28F682992945EFAB008556B4 /* Assets.xcassets */,
 				28F6829B2945EFAB008556B4 /* LaunchScreen.storyboard */,
+				28F682C22945F10B008556B4 /* Packages */,
 			);
 			path = RPSSim;
 			sourceTree = "<group>";
@@ -121,6 +126,21 @@
 			path = RPSSimUITests;
 			sourceTree = "<group>";
 		};
+		28F682C22945F10B008556B4 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				28F682C32945F143008556B4 /* RPSSimUI */,
+			);
+			path = Packages;
+			sourceTree = "<group>";
+		};
+		28F682C62945F2A9008556B4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -137,6 +157,9 @@
 			dependencies = (
 			);
 			name = RPSSim;
+			packageProductDependencies = (
+				28F682C72945F2A9008556B4 /* RPSSimUI */,
+			);
 			productName = RPSSim;
 			productReference = 28F6828D2945EFA9008556B4 /* RPSSim.app */;
 			productType = "com.apple.product-type.application";
@@ -584,6 +607,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		28F682C72945F2A9008556B4 /* RPSSimUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RPSSimUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 28F682852945EFA9008556B4 /* Project object */;
 }
