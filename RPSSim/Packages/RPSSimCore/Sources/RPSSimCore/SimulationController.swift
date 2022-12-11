@@ -15,6 +15,7 @@ public final class SimulationController {
     private let simulationCharacterGenerator: SimulationCharacterGenerator
     private let simulationCharacterPositionAdvancer: SimulationCharacterPositionAdvancer
     private let caDisplayLinkPublisherProvider: CADisplayLinkPublisherProvider
+    private let simulationCharacterCollisionResolver: SimulationCharacterCollisionResolver
     
     public var viewModel: SimulationViewModel = .init()
     private var cancellables: Set<AnyCancellable> = []
@@ -24,13 +25,15 @@ public final class SimulationController {
         simulationViewFrameSizeProvider: SimulationViewFrameSizeProvider,
         simulationCharacterGenerator: SimulationCharacterGenerator,
         simulationCharacterPositionAdvancer: SimulationCharacterPositionAdvancer,
-        caDisplayLinkPublisherProvider: CADisplayLinkPublisherProvider
+        caDisplayLinkPublisherProvider: CADisplayLinkPublisherProvider,
+        simulationCharacterCollisionResolver: SimulationCharacterCollisionResolver
     ) {
         self.simulationCharacterFrameSizeProvider = simulationCharacterFrameSizeProvider
         self.simulationViewFrameSizeProvider = simulationViewFrameSizeProvider
         self.simulationCharacterGenerator = simulationCharacterGenerator
         self.simulationCharacterPositionAdvancer = simulationCharacterPositionAdvancer
         self.caDisplayLinkPublisherProvider = caDisplayLinkPublisherProvider
+        self.simulationCharacterCollisionResolver = simulationCharacterCollisionResolver
     }
     
     public func startSimulation() {
@@ -49,6 +52,7 @@ public final class SimulationController {
                     size: self.simulationViewFrameSizeProvider.size()
                 )
             )
+            self.simulationCharacterCollisionResolver.resolve(characterViewModels: self.viewModel.characters.value)
         }.store(in: &cancellables)
     }
 }
