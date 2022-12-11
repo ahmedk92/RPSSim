@@ -9,10 +9,6 @@ import Foundation
 import Combine
 
 public final class SimulationCharacterViewModel {
-    public let type: SimulationCharacterType
+    public let type: CurrentValueSubject<SimulationCharacterType?, Never> = .init(nil)
     public let frame: CurrentValueSubject<CGRect?, Never> = .init(nil)
-    
-    public init(type: SimulationCharacterType) {
-        self.type = type
-    }
 }

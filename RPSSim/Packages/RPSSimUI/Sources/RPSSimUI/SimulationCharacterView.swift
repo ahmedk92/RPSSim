@@ -17,7 +17,7 @@ public final class SimulationCharacterView: UIView {
         }
     }
     private var label: UILabel!
-    private var frameCancellable: AnyCancellable?
+    private var cancellables: Set<AnyCancellable> = []
     
     public init(simulationCharacterEmojiResolver: SimulationCharacterEmojiResolver) {
         self.simulationCharacterEmojiResolver = simulationCharacterEmojiResolver
@@ -46,14 +46,22 @@ public final class SimulationCharacterView: UIView {
     }
     
     private func updateView() {
-        label.text = viewModel.map { viewModel in
-            simulationCharacterEmojiResolver.emoji(characterType: viewModel.type)
-        }
-        frameCancellable = viewModel?.frame
+        cancellables = []
+        
+        guard let viewModel = viewModel else { return }
+        
+        viewModel.type
+            .compactMap({ $0 })
+            .sink { [weak self] type in
+                guard let self = self else { return }
+                self.label.text = self.simulationCharacterEmojiResolver.emoji(characterType: type)
+            }.store(in: &cancellables)
+        
+        viewModel.frame
             .compactMap({ $0 })
             .sink { [weak self] frame in
-            guard let self = self else { return }
+                guard let self = self else { return }
                 self.frame = frame
-        }
+            }.store(in: &cancellables)
     }
 }

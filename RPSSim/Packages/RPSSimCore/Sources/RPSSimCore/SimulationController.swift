@@ -22,7 +22,8 @@ public final class SimulationController {
     }
     
     public func startSimulation() {
-        let dummyCharacter1 = SimulationCharacterViewModel(type: .rock)
+        let dummyCharacter1 = SimulationCharacterViewModel()
+        dummyCharacter1.type.send(.paper)
         dummyCharacter1.frame.send(
             randomCharacterRect(
                 containerRect: .init(
