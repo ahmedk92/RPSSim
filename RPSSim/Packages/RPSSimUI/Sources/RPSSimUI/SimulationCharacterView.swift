@@ -10,7 +10,7 @@ import Combine
 import RPSSimCore
 
 public final class SimulationCharacterView: UIView {
-    private let simulationCharacterEmojiResolver: SimulationCharacterEmojiResolver
+    private let simulationCharacterLabelConfigurator: SimulationCharacterLabelConfigurator
     var viewModel: SimulationCharacterViewModel? {
         didSet {
             updateView()
@@ -19,8 +19,8 @@ public final class SimulationCharacterView: UIView {
     private var label: UILabel!
     private var cancellables: Set<AnyCancellable> = []
     
-    public init(simulationCharacterEmojiResolver: SimulationCharacterEmojiResolver) {
-        self.simulationCharacterEmojiResolver = simulationCharacterEmojiResolver
+    public init(simulationCharacterLabelConfigurator: SimulationCharacterLabelConfigurator) {
+        self.simulationCharacterLabelConfigurator = simulationCharacterLabelConfigurator
         super.init(frame: .zero)
         setUpSubviews()
     }
@@ -54,7 +54,10 @@ public final class SimulationCharacterView: UIView {
             .compactMap({ $0 })
             .sink { [weak self] type in
                 guard let self = self else { return }
-                self.label.text = self.simulationCharacterEmojiResolver.emoji(characterType: type)
+                self.simulationCharacterLabelConfigurator.configure(
+                    label: self.label,
+                    forType: type
+                )
             }.store(in: &cancellables)
         
         viewModel.frame

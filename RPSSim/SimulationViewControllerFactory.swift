@@ -12,10 +12,11 @@ import RPSSimUI
 final class SimulationViewControllerFactory {
     func makeSimulationViewController() -> SimulationViewController {
         let simulationCharacterEmojiResolver = SimulationCharacterEmojiResolver()
+        let simulationCharacterLabelConfigurator = SimulationCharacterLabelConfigurator(
+            simulationCharacterEmojiResolver: simulationCharacterEmojiResolver
+        )
         let simulationCharacterFrameSizeProvider = SimulationCharacterFrameSizeProvider(
-            simulationCharacterLabelConfigurator: .init(
-                simulationCharacterEmojiResolver: simulationCharacterEmojiResolver
-            ),
+            simulationCharacterLabelConfigurator: simulationCharacterLabelConfigurator,
             simulationCharacterEmojiResolver: simulationCharacterEmojiResolver
         )
         
@@ -31,7 +32,8 @@ final class SimulationViewControllerFactory {
                 simulationCharacterCollisionResolver: .init()
             ),
             simulationCharacterEmojiResolver: simulationCharacterEmojiResolver,
-            simulationViewFrameSizeProvider: simulationViewFrameSizeProvider
+            simulationViewFrameSizeProvider: simulationViewFrameSizeProvider,
+            simulationCharacterLabelConfigurator: simulationCharacterLabelConfigurator
         )
     }
 }

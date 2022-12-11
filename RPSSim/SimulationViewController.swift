@@ -13,6 +13,7 @@ class SimulationViewController: UIViewController {
     private let simulationController: SimulationController
     private let simulationCharacterEmojiResolver: SimulationCharacterEmojiResolver
     private let simulationViewFrameSizeProvider: RPSSimUI.SimulationViewFrameSizeProvider
+    private let simulationCharacterLabelConfigurator: SimulationCharacterLabelConfigurator
     
     private var simulationView: SimulationView!
     private var viewDidAppearQueue: OperationQueue = .main
@@ -20,11 +21,13 @@ class SimulationViewController: UIViewController {
     init(
         simulationController: SimulationController,
         simulationCharacterEmojiResolver: SimulationCharacterEmojiResolver,
-        simulationViewFrameSizeProvider: RPSSimUI.SimulationViewFrameSizeProvider
+        simulationViewFrameSizeProvider: RPSSimUI.SimulationViewFrameSizeProvider,
+        simulationCharacterLabelConfigurator: SimulationCharacterLabelConfigurator
     ) {
         self.simulationController = simulationController
         self.simulationCharacterEmojiResolver = simulationCharacterEmojiResolver
         self.simulationViewFrameSizeProvider = simulationViewFrameSizeProvider
+        self.simulationCharacterLabelConfigurator = simulationCharacterLabelConfigurator
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -48,7 +51,10 @@ class SimulationViewController: UIViewController {
     }
     
     private func setUpView() {
-        simulationView = .init(simulationCharacterEmojiResolver: simulationCharacterEmojiResolver)
+        simulationView = .init(
+            simulationCharacterEmojiResolver: simulationCharacterEmojiResolver,
+            simulationCharacterLabelConfigurator: simulationCharacterLabelConfigurator
+        )
         simulationView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(simulationView)
         NSLayoutConstraint.activate([

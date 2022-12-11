@@ -11,6 +11,7 @@ import Combine
 
 public final class SimulationView: UIView {
     private let simulationCharacterEmojiResolver: SimulationCharacterEmojiResolver
+    private let simulationCharacterLabelConfigurator: SimulationCharacterLabelConfigurator
     
     public var viewModel: SimulationViewModel? {
         didSet {
@@ -20,8 +21,12 @@ public final class SimulationView: UIView {
     private var cancellables: Set<AnyCancellable> = []
     private var characterViews: [SimulationCharacterView] = []
     
-    public init(simulationCharacterEmojiResolver: SimulationCharacterEmojiResolver) {
+    public init(
+        simulationCharacterEmojiResolver: SimulationCharacterEmojiResolver,
+        simulationCharacterLabelConfigurator: SimulationCharacterLabelConfigurator
+    ) {
         self.simulationCharacterEmojiResolver = simulationCharacterEmojiResolver
+        self.simulationCharacterLabelConfigurator = simulationCharacterLabelConfigurator
         super.init(frame: .zero)
     }
     
@@ -46,7 +51,7 @@ public final class SimulationView: UIView {
     
     private func addCharacterView(characterViewModel: SimulationCharacterViewModel) {
         let characterView = SimulationCharacterView(
-            simulationCharacterEmojiResolver: simulationCharacterEmojiResolver
+            simulationCharacterLabelConfigurator: simulationCharacterLabelConfigurator
         )
         characterView.viewModel = characterViewModel
         addSubview(characterView)
