@@ -16,6 +16,11 @@ class SimulationViewController: UIViewController {
     private let simulationCharacterLabelConfigurator: SimulationCharacterLabelConfigurator
     
     private var simulationView: SimulationView!
+    private let operationQueue: OperationQueue = {
+        let queue = OperationQueue()
+        queue.maxConcurrentOperationCount = 1
+        return queue
+    }()
     
     init(
         simulationController: SimulationController,
@@ -38,12 +43,20 @@ class SimulationViewController: UIViewController {
         super.viewDidLoad()
         setUpView()
         simulationView.viewModel = simulationController.viewModel
+        
+        operationQueue.isSuspended = true
+        operationQueue.addOperation { [weak self] in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                self.simulationViewFrameSizeProvider.simulationView = self.simulationView
+                self.simulationController.startSimulation()
+            }
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        simulationViewFrameSizeProvider.simulationView = simulationView
-        simulationController.startSimulation()
+        operationQueue.isSuspended = false
     }
     
     private func setUpView() {
