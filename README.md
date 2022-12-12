@@ -1,4 +1,2 @@
 # RPSSim
-
-https://user-images.githubusercontent.com/11476927/206926480-7d6e2ff9-7b09-4a24-9568-65b65d0dccf3.mp4
-
+https://user-images.githubusercontent.com/11476927/207158286-7f33622d-bb05-47da-a748-e0e0b28d0da4.mp4
