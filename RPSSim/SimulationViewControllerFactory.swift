@@ -10,7 +10,7 @@ import RPSSimCore
 import RPSSimUI
 
 final class SimulationViewControllerFactory {
-    func makeSimulationViewController() -> SimulationViewController {
+    @MainActor func makeSimulationViewController() -> SimulationViewController {
         let simulationCharacterEmojiResolver = SimulationCharacterEmojiResolver()
         let simulationCharacterLabelConfigurator = SimulationCharacterLabelConfigurator(
             simulationCharacterEmojiResolver: simulationCharacterEmojiResolver

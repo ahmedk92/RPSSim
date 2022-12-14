@@ -45,14 +45,17 @@ public final class SimulationController {
         caDisplayLinkPublisherProvider.publisher.sink { [weak self] in
             guard let self = self else { return }
             
-            self.simulationCharacterPositionAdvancer.advance(
-                characterViewModels: self.viewModel.characters.value,
-                viewFrame: .init(
-                    origin: .zero,
-                    size: self.simulationViewFrameSizeProvider.size()
+            Task { @MainActor in
+                await self.simulationCharacterPositionAdvancer.advance(
+                    characterViewModels: self.viewModel.characters.value,
+                    viewFrame: .init(
+                        origin: .zero,
+                        size: self.simulationViewFrameSizeProvider.size()
+                    )
                 )
-            )
-            self.simulationCharacterCollisionResolver.resolve(characterViewModels: self.viewModel.characters.value)
+                
+                self.simulationCharacterCollisionResolver.resolve(characterViewModels: self.viewModel.characters.value)
+            }
         }.store(in: &cancellables)
     }
 }
