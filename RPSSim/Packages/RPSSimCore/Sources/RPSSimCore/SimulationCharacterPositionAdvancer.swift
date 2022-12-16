@@ -8,7 +8,11 @@
 import Foundation
 
 public final class SimulationCharacterPositionAdvancer {
-    public init() {}
+    private let simulationCharacterCollisionResolver: SimulationCharacterCollisionResolver
+    
+    public init(simulationCharacterCollisionResolver: SimulationCharacterCollisionResolver) {
+        self.simulationCharacterCollisionResolver = simulationCharacterCollisionResolver
+    }
     
     @MainActor
     func advance(
@@ -42,6 +46,8 @@ public final class SimulationCharacterPositionAdvancer {
             viewFrame: viewFrame
         ).randomElement()!
         characterViewModel.frame.send(nextPosition)
+        
+        simulationCharacterCollisionResolver.resolve(character: characterViewModel)
         
         try? await Task.sleep(nanoseconds: UInt64(index) * 1000)
     }

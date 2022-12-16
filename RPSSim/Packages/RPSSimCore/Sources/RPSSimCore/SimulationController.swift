@@ -15,7 +15,6 @@ public final class SimulationController {
     private let simulationCharacterGenerator: SimulationCharacterGenerator
     private let simulationCharacterPositionAdvancer: SimulationCharacterPositionAdvancer
     private let caDisplayLinkPublisherProvider: CADisplayLinkPublisherProvider
-    private let simulationCharacterCollisionResolver: SimulationCharacterCollisionResolver
     
     public var viewModel: SimulationViewModel = .init()
     private var cancellables: Set<AnyCancellable> = []
@@ -25,15 +24,13 @@ public final class SimulationController {
         simulationViewFrameSizeProvider: SimulationViewFrameSizeProvider,
         simulationCharacterGenerator: SimulationCharacterGenerator,
         simulationCharacterPositionAdvancer: SimulationCharacterPositionAdvancer,
-        caDisplayLinkPublisherProvider: CADisplayLinkPublisherProvider,
-        simulationCharacterCollisionResolver: SimulationCharacterCollisionResolver
+        caDisplayLinkPublisherProvider: CADisplayLinkPublisherProvider
     ) {
         self.simulationCharacterFrameSizeProvider = simulationCharacterFrameSizeProvider
         self.simulationViewFrameSizeProvider = simulationViewFrameSizeProvider
         self.simulationCharacterGenerator = simulationCharacterGenerator
         self.simulationCharacterPositionAdvancer = simulationCharacterPositionAdvancer
         self.caDisplayLinkPublisherProvider = caDisplayLinkPublisherProvider
-        self.simulationCharacterCollisionResolver = simulationCharacterCollisionResolver
     }
     
     public func startSimulation() {
@@ -42,7 +39,7 @@ public final class SimulationController {
             characterFrameSize: simulationCharacterFrameSizeProvider.size()
         ))
         
-        caDisplayLinkPublisherProvider.publisher.sink { [weak self] in
+        Timer.publish(every: 0.1, on: .main, in: .common).autoconnect().sink { [weak self] _ in
             guard let self = self else { return }
             
             Task { @MainActor in
@@ -53,8 +50,6 @@ public final class SimulationController {
                         size: self.simulationViewFrameSizeProvider.size()
                     )
                 )
-                
-                self.simulationCharacterCollisionResolver.resolve(characterViewModels: self.viewModel.characters.value)
             }
         }.store(in: &cancellables)
     }

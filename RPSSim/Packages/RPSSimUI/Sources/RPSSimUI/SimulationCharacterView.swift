@@ -49,25 +49,16 @@ public final class SimulationCharacterView: UIView {
         cancellables = []
         
         guard let viewModel = viewModel else { return }
-        
-        let throttleTime: CGFloat = 0.5
-        
+                
         viewModel.type
             .compactMap({ $0 })
             .combineLatest(viewModel.frame.compactMap({ $0 }))
             .sink { [weak self] type, frame in
                 guard let self = self else { return }
-                UIView.animate(
-                    withDuration: throttleTime,
-                    animations: {
-                        self.frame = frame
-                    },
-                    completion: { _ in
-                        self.simulationCharacterLabelConfigurator.configure(
-                            label: self.label,
-                            forType: type
-                        )
-                    }
+                self.frame = frame
+                self.simulationCharacterLabelConfigurator.configure(
+                    label: self.label,
+                    forType: type
                 )
             }.store(in: &cancellables)
     }
