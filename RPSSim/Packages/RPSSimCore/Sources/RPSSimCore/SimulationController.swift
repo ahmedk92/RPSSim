@@ -42,7 +42,7 @@ public final class SimulationController {
             characterFrameSize: simulationCharacterFrameSizeProvider.size()
         ))
         
-        Timer.publish(every: 0.1, on: .main, in: .common).autoconnect().sink { [weak self] _ in
+        Timer.publish(every: 0.05, on: .main, in: .common).autoconnect().sink { [weak self] _ in
             guard let self = self else { return }
             
             Task { @MainActor in

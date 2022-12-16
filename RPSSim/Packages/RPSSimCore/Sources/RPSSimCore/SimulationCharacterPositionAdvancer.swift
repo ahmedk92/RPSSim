@@ -55,10 +55,9 @@ public final class SimulationCharacterPositionAdvancer {
         guard let currentCharacterFrame = characterViewModel.frame.value else { return [] }
         
         var moves: [CGRect] = []
-        let xDeltas: [CGFloat] = [-1, 0, 1]
-        let yDeltas: [CGFloat] = [-1, 0, 1]
-        for xDelta in xDeltas {
-            for yDelta in yDeltas {
+        let deltas: [CGFloat] = [-1, -2, -3, 0, 1, 2, 3]
+        for xDelta in deltas {
+            for yDelta in deltas {
                 var candidateCharacterFrame = currentCharacterFrame
                 candidateCharacterFrame.origin.x += xDelta
                 candidateCharacterFrame.origin.y += yDelta
