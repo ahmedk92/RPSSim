@@ -27,12 +27,9 @@ final class SimulationViewControllerFactory {
                 simulationCharacterFrameSizeProvider: simulationCharacterFrameSizeProvider,
                 simulationViewFrameSizeProvider: simulationViewFrameSizeProvider,
                 simulationCharacterGenerator: .init(),
-                simulationCharacterPositionAdvancer: .init(
-                    simulationCharacterCollisionResolver: .init(
-                        simulationCharacterFramePathResolver: .init()
-                    )
-                ),
-                caDisplayLinkPublisherProvider: .init()
+                simulationCharacterPositionAdvancer: .init(),
+                caDisplayLinkPublisherProvider: .init(),
+                simulationCharacterCollisionResolver: .init()
             ),
             simulationCharacterEmojiResolver: simulationCharacterEmojiResolver,
             simulationViewFrameSizeProvider: simulationViewFrameSizeProvider,

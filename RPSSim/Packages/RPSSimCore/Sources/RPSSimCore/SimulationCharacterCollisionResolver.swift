@@ -1,6 +1,6 @@
 //
 //  File.swift
-//  
+//
 //
 //  Created by Ahmed Khalaf on 11/12/2022.
 //
@@ -8,51 +8,47 @@
 import Foundation
 
 public final class SimulationCharacterCollisionResolver {
-    private let simulationCharacterFramePathResolver: SimulationCharacterFramePathResolver
-    private var occupations: [SimulationCharacterFramePath : [SimulationCharacterViewModel]] = [:]
+    public init() {}
     
-    public init(simulationCharacterFramePathResolver: SimulationCharacterFramePathResolver) {
-        self.simulationCharacterFramePathResolver = simulationCharacterFramePathResolver
+    func resolve(
+        characterViewModels: [SimulationCharacterViewModel]
+    ) {
+        var aCollisionWasResolved = false
+        repeat {
+            aCollisionWasResolved = false
+            doResolve(
+                characterViewModels: characterViewModels,
+                didResolve: &aCollisionWasResolved
+            )
+        } while aCollisionWasResolved
     }
     
-    public func resolve(character: SimulationCharacterViewModel) {
-        removeOccupation(character: character)
-        
-        guard
-            let characterFrame = character.frame.value,
-            let path = simulationCharacterFramePathResolver.resolve(characterFrame: characterFrame)
-        else { return }
-        
-        occupations[path, default: []].append(character)
-        
-        convertOccupants(occupants: occupations[path] ?? [])
-    }
-    
-    private func removeOccupation(character: SimulationCharacterViewModel) {
-        for entry in occupations {
-            if let characterIndex = entry.value.firstIndex(where: { $0 === character }) {
-                occupations[entry.key]?.remove(at: characterIndex)
-            }
-        }
-    }
-    
-    private func convertOccupants(occupants: [SimulationCharacterViewModel]) {
-        for occupant1 in occupants {
-            for occupant2 in occupants where occupant1 !== occupant2 {
+    private func doResolve(
+        characterViewModels: [SimulationCharacterViewModel],
+        didResolve: inout Bool
+    ) {
+        for characterViewModel1 in characterViewModels {
+            for characterViewModel2 in characterViewModels where characterViewModel1 !== characterViewModel2 {
                 guard
-                    let type1 = occupant1.type.value,
-                    let type2 = occupant2.type.value
+                    let frame1 = characterViewModel1.frame.value,
+                    let frame2 = characterViewModel2.frame.value,
+                    frame1.intersects(frame2),
+                    let type1 = characterViewModel1.type.value,
+                    let type2 = characterViewModel2.type.value
                 else { continue }
                 
                 switch (type1, type2) {
                 case (.rock, .scissors):
-                    occupant2.type.send(.rock)
+                    characterViewModel2.type.send(.rock)
+                    didResolve = true
                 case (.paper, .rock):
-                    occupant2.type.send(.paper)
+                    characterViewModel2.type.send(.paper)
+                    didResolve = true
                 case (.scissors, .paper):
-                    occupant2.type.send(.scissors)
+                    characterViewModel2.type.send(.scissors)
+                    didResolve = true
                 default:
-                    continue
+                    break
                 }
             }
         }
