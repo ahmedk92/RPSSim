@@ -35,7 +35,9 @@ public final class SimulationView: UIView {
     }
     
     private func observeViewModel() {
-        viewModel?.characters.sink { [weak self] characters in
+        viewModel?.characters
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] characters in
             guard let self = self else { return }
             self.reloadView(forCharacters: characters)
         }.store(in: &cancellables)

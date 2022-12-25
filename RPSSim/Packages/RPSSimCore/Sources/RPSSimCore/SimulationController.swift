@@ -36,8 +36,8 @@ public final class SimulationController {
         self.simulationCharacterCollisionResolver = simulationCharacterCollisionResolver
     }
     
-    public func startSimulation() {
-        viewModel.characters.send(simulationCharacterGenerator.generateCharacters(
+    public func startSimulation() async {
+        await viewModel.characters.send(simulationCharacterGenerator.generateCharacters(
             viewFrameSize: simulationViewFrameSizeProvider.size(),
             characterFrameSize: simulationCharacterFrameSizeProvider.size()
         ))
@@ -45,7 +45,7 @@ public final class SimulationController {
         Timer.publish(every: 0.05, on: .main, in: .common).autoconnect().sink { [weak self] _ in
             guard let self = self else { return }
             
-            Task { @MainActor in
+            Task {
                 await self.simulationCharacterPositionAdvancer.advance(
                     characterViewModels: self.viewModel.characters.value,
                     viewFrame: .init(

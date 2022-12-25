@@ -53,6 +53,7 @@ public final class SimulationCharacterView: UIView {
         viewModel.type
             .compactMap({ $0 })
             .combineLatest(viewModel.frame.compactMap({ $0 }))
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] type, frame in
                 guard let self = self else { return }
                 UIView.animate(

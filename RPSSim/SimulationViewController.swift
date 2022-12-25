@@ -47,9 +47,9 @@ class SimulationViewController: UIViewController {
         operationQueue.isSuspended = true
         operationQueue.addOperation { [weak self] in
             guard let self = self else { return }
-            DispatchQueue.main.async {
+            Task { @MainActor in
                 self.simulationViewFrameSizeProvider.simulationView = self.simulationView
-                self.simulationController.startSimulation()
+                await self.simulationController.startSimulation()
             }
         }
     }

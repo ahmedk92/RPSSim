@@ -8,5 +8,5 @@
 import Foundation
 
 public protocol SimulationCharacterFrameSizeProvider {
-    func size() -> CGSize
+    func size() async -> CGSize
 }

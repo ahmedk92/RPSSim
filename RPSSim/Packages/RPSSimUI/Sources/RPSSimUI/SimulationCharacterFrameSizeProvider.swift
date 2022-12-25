@@ -24,7 +24,8 @@ public final class SimulationCharacterFrameSizeProvider: RPSSimCore.SimulationCh
         simulationCharacterEmojiResolver.emoji(characterType: characterType)
     }
     
-    public func size() -> CGSize {
+    @MainActor
+    public func size() async -> CGSize {
         var maxWidth: CGFloat = 0
         var maxHeight: CGFloat = 0
         

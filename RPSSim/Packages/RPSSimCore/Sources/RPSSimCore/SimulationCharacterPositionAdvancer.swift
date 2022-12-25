@@ -12,7 +12,6 @@ public final class SimulationCharacterPositionAdvancer {
     public init() {
     }
     
-    @MainActor
     func advance(
         characterViewModels: [SimulationCharacterViewModel],
         viewFrame: CGRect
@@ -21,11 +20,12 @@ public final class SimulationCharacterPositionAdvancer {
             for (characterViewModel, index) in zip(characterViewModels, characterViewModels.indices) {
                 group.addTask { [weak self] in
                     guard let self = self else { return }
-                    await self.advance(
+                    self.advance(
                         characterViewModel: characterViewModel,
-                        viewFrame: viewFrame,
-                        index: index
+                        viewFrame: viewFrame
                     )
+                    
+                    try? await Task.sleep(nanoseconds: UInt64(index) * 1000)
                 }
             }
             
@@ -33,19 +33,15 @@ public final class SimulationCharacterPositionAdvancer {
         }
     }
     
-    @MainActor
     private func advance(
         characterViewModel: SimulationCharacterViewModel,
-        viewFrame: CGRect,
-        index: Int
-    ) async {
+        viewFrame: CGRect
+    ) {
         let nextPosition = possibleMoves(
             characterViewModel: characterViewModel,
             viewFrame: viewFrame
         ).randomElement()!
         characterViewModel.frame.send(nextPosition)
-        
-        try? await Task.sleep(nanoseconds: UInt64(index) * 1000)
     }
     
     private func possibleMoves(

@@ -13,7 +13,8 @@ public final class SimulationViewFrameSizeProvider: RPSSimCore.SimulationViewFra
     
     public init() {}
     
-    public func size() -> CGSize {
+    @MainActor
+    public func size() async -> CGSize {
         simulationView.frame.size
     }
 }
